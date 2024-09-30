@@ -112,6 +112,11 @@
         e.preventDefault();
     });
 
+    document.querySelector('img').addEventListener('touchstart', function(e) {
+        e.preventDefault();  // Prevent any touch behavior that could interfere
+    });
+
+
     // Handle button clicks
     document.querySelector('button').addEventListener('click', function(e) {
         e.preventDefault();
