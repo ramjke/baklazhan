@@ -112,11 +112,6 @@
         e.preventDefault();
     });
 
-    document.querySelector('img').addEventListener('touchstart', function(e) {
-        e.preventDefault();  // Prevent any touch behavior that could interfere
-    });
-
-
     // Handle button clicks
     document.querySelector('button').addEventListener('click', function(e) {
         e.preventDefault();
@@ -145,5 +140,8 @@
         updateCPS();
     }, 100);
 </script>
+<!-- Eruda is console for mobile browsers -->
+<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>eruda.init();</script>
 </body>
 </html>
