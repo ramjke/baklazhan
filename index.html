@@ -52,7 +52,9 @@
             height: auto;
             object-fit: contain;
             cursor: pointer;
+            touch-action: manipulation; /* Ensure no zoom or pan is triggered */
             -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
+            pointer-events: auto; /* Allow pointer events (because img usually disables some) */
 
             /* Transitions */
             transition: transform 0.1s ease-in-out;
@@ -122,6 +124,7 @@
     setInterval(() => {
         updateCPS();
     }, 100);
+
 
     document.querySelector('img').addEventListener('touchstart', function(e) {
         e.preventDefault();  // Prevent any touch behavior that could interfere
