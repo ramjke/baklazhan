@@ -56,11 +56,14 @@
             -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
             pointer-events: auto; /* Allow pointer events (because img usually disables some) */
             transition: transform 0.1s ease-in-out; /* Animation for clicking effect */
+            -webkit-transition: -webkit-transform 0.1s ease-in-out; /* Safari-specific transition */
+            transform: translateZ(0); /* Force hardware acceleration */
         }
 
         /* Add a button-like effect: scale on click */
         img:active {
             transform: scale(0.95); /* Shrinks image slightly when clicked */
+            -webkit-transform: scale(0.95); /* Safari-specific transform */
         }
 
         #cps {
