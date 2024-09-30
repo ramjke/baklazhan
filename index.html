@@ -52,7 +52,6 @@
             height: auto;
             object-fit: contain;
             cursor: pointer;
-            touch-action: manipulation; /* Disable zoom on long press or double tap */
             -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
             pointer-events: auto; /* Allow pointer events (because img usually disables some) */
             transition: transform 0.1s ease-in-out; /* Animation for clicking effect */
@@ -77,7 +76,7 @@
     <div id="cps">0 в секунду</div>
 </main>
 
-<script src="https://telegram.org/js/tapps.js"></script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
     // Init TWA
     Telegram.WebApp.ready();
