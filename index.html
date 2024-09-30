@@ -46,28 +46,35 @@
             text-align: center;
         }
 
-        /* Style the image as a button */
-        img {
-            max-width: 80%;
-            height: auto;
-            object-fit: contain;
+        /* Style the button to behave like the image */
+        button {
+            border: none;
+            background: none;
+            padding: 0;
             cursor: pointer;
             touch-action: manipulation; /* Ensure no zoom or pan is triggered */
             -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
-            pointer-events: auto; /* Allow pointer events (because img usually disables some) */
+        }
+
+        /* Style the image inside the button */
+        button img {
+            max-width: 80%;
+            height: auto;
+            object-fit: contain;
+            pointer-events: none; /* Disable pointer events on the image itself */
 
             /* Transitions */
             transition: transform 0.1s ease-in-out;
             -webkit-transition: -webkit-transform 0.1s ease-in-out;
             transform: translateZ(0); /* Force hardware acceleration */
-            -webkit-transform: translateZ(0); /* Ensure Safari hardware acceleration */
+            -webkit-transform: translateZ(0); /* Safari-specific */
 
             /* Performance hint */
             will-change: transform;
         }
 
         /* Add a button-like effect: scale on click */
-        img:active {
+        button:active img {
             transform: scale(0.95); /* Shrinks image slightly when clicked */
             -webkit-transform: scale(0.95); /* Safari-specific transform */
         }
@@ -82,7 +89,9 @@
 <body>
 <main>
     <div id="counter">0</div>
-    <img onclick="baklazhanClicked();" src="./assets/baklazhan_avatar.png" alt="Баклажан">
+    <button id="baklazhanButton">
+        <img src="./assets/baklazhan_avatar.png" alt="Баклажан">
+    </button>
     <div id="cps">0 в секунду</div>
 </main>
 
@@ -99,8 +108,13 @@
     let clickTimes = [];
 
     // Prevent default long-press context menu on mobile
-    document.querySelector('img').addEventListener('contextmenu', function(e) {
+    document.querySelector('button').addEventListener('contextmenu', function(e) {
         e.preventDefault();
+    });
+
+    // Handle button clicks
+    document.querySelector('button').addEventListener('click', function() {
+        baklazhanClicked();
     });
 
     function baklazhanClicked() {
