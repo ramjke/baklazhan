@@ -113,7 +113,8 @@
     });
 
     // Handle button clicks
-    document.querySelector('button').addEventListener('click', function() {
+    document.querySelector('button').addEventListener('click', function(e) {
+        e.preventDefault();
         baklazhanClicked();
     });
 
