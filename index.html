@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Баклажан Mini App</title>
     <style>
-        /* Ensure body takes full viewport and uses flexbox for centering */
+        /* Make content unselectable and disable zoom */
         html, body {
-            -webkit-user-select: none; /* For Safari */
-            -moz-user-select: none;    /* For Firefox */
-            -ms-user-select: none;     /* For Internet Explorer/Edge */
-            user-select: none;         /* Standard property */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* IE/Edge */
+            user-select: none;         /* Standard */
             --bg-color: var(--tg-theme-bg-color);
             background-color: var(--bg-color);
             color-scheme: var(--tg-color-scheme);
@@ -21,37 +21,44 @@
             font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Verdana, sans-serif;
             color: var(--tg-theme-text-color, #000);
             display: flex;
-            justify-content: flex-start; /* Align to the top */
+            justify-content: flex-start;
             align-items: center;
             flex-direction: column;
         }
 
-        /* Ensure main content is responsive */
         main {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* Align content to the top */
-            width: 100%;  /* Full width of the viewport */
-            height: 100%; /* Full height of the viewport */
-            box-sizing: border-box; /* Ensures padding/margin are considered in element size */
-            padding: 32px 0 16px 0; /* Space around content */
+            justify-content: flex-start;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            padding: 32px 0 16px 0;
         }
 
-        /* Style the counter */
         #counter {
             font-size: 4em;
             text-align: center;
         }
 
-        /* Make image responsive */
+        /* Style the image as a button */
         img {
             max-width: 80%;
             height: auto;
-            object-fit: contain; /* Ensure image maintains aspect ratio and scales properly */
+            object-fit: contain;
+            cursor: pointer;
+            touch-action: manipulation; /* Disable zoom on long press or double tap */
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
+            pointer-events: auto; /* Allow pointer events (because img usually disables some) */
+            transition: transform 0.1s ease-in-out; /* Animation for clicking effect */
         }
 
-        /* Ensure CPS div is responsive */
+        /* Add a button-like effect: scale on click */
+        img:active {
+            transform: scale(0.95); /* Shrinks image slightly when clicked */
+        }
+
         #cps {
             font-size: 1em;
             margin-top: 10px;
@@ -62,7 +69,7 @@
 <body>
 <main>
     <div id="counter">0</div>
-    <img onclick="baklazhanClicked();" src="./assets/baklazhan_avatar.png" alt="Баклажан" style="cursor:pointer;">
+    <img onclick="baklazhanClicked();" src="./assets/baklazhan_avatar.png" alt="Баклажан">
     <div id="cps">0 в секунду</div>
 </main>
 
@@ -71,7 +78,6 @@
     // Init TWA
     Telegram.WebApp.ready();
 
-    // Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
     Telegram.WebApp.onEvent('themeChanged', function() {
         document.documentElement.className = Telegram.WebApp.colorScheme;
     });
@@ -79,39 +85,32 @@
     let clickCount = 0;
     let clickTimes = [];
 
-    // Function called when the image is clicked
+    // Prevent default long-press context menu on mobile
+    document.querySelector('img').addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
     function baklazhanClicked() {
-        // Increment the counter
         clickCount++;
         document.getElementById('counter').innerText = clickCount;
 
-        // Store the current time
         const now = Date.now();
         clickTimes.push(now);
 
-        // Clean up old clicks (older than 1 second)
         clickTimes = clickTimes.filter(time => now - time <= 1000);
-
-        // Update CPS immediately after each click
         updateCPS();
     }
 
-    // Function to calculate and update CPS (Clicks Per Second)
     function updateCPS() {
         const now = Date.now();
-
-        // Filter clickTimes to only keep clicks within the last second (1000ms)
         const recentClicks = clickTimes.filter(time => now - time <= 1000);
-
-        const cps = recentClicks.length; // CPS = number of clicks in the last second
+        const cps = recentClicks.length;
         document.getElementById('cps').innerText = cps + ' в секунду';
     }
 
-    // Update CPS at a regular interval (every 100ms for smooth updates)
     setInterval(() => {
         updateCPS();
-    }, 100);  // Check and update CPS every 100ms
-
+    }, 100);
 </script>
 </body>
 </html>
