@@ -6,73 +6,63 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Баклажан Mini App</title>
     <style>
-        body {
+        /* Ensure body takes full viewport and uses flexbox for centering */
+        html, body {
             --bg-color: var(--tg-theme-bg-color);
-            font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Verdana, sans-serif;
             background-color: var(--bg-color);
-            color: var(--tg-theme-text-color);
-            margin: 48px 24px;
-            padding: 0;
             color-scheme: var(--tg-color-scheme);
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Verdana, sans-serif;
+            color: var(--tg-theme-text-color, #000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
-        a {
-            color: var(--tg-theme-link-color);
-        }
-        #viewport {
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: 0;
-            height: var(--tg-viewport-stable-height, 100vh);
-            pointer-events: none;
-            transition: all .2s ease;
-        }
-        #viewport:after {
-            content: '';
-            display: block;
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            border-width: 4px;
-            border-style: solid;
-            border-image: linear-gradient(45deg, rgba(64, 224, 208, .5), rgba(173, 255, 47, .5)) 1;
+        /* Ensure main content is responsive */
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;  /* Full width of the viewport */
+            height: 100%; /* Full height of the viewport */
+            box-sizing: border-box; /* Ensures padding/margin are considered in element size */
+            padding: 16px; /* Space around content */
         }
 
-        #viewport-params-size,
-        #viewport-params-expand {
-            content: attr(text);
-            position: absolute;
-            display: inline-block;
-            background: var(--tg-theme-link-color, rgb(64, 224, 208));
-            right: 4px;
-            left: auto;
-            font-size: 8px;
-            padding: 4px;
-            vertical-align: top;
+        /* Style the counter */
+        #counter {
+            font-size: 4em;
+            padding-bottom: 0.5em;
+            text-align: center;
         }
-        #viewport-params-size {
-            top: 4px;
+
+        /* Make image responsive */
+        img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain; /* Ensure image maintains aspect ratio and scales properly */
         }
-        #viewport-params-expand {
-            top: 30px;
+
+        /* Ensure CPS div is responsive */
+        #cps {
+            font-size: 1.5em;
+            margin-top: 10px;
         }
     </style>
 </head>
 
 <body>
 <main>
-    <div align="center" style="text-align:center;">
-        <div id="counter" style="display: block; font-size: 4em; padding-bottom: 0.5em;">0</div>
-        <img onclick="baklazhanClicked();" src="./assets/baklazhan_avatar.png" alt="Баклажан" style="cursor:pointer;">
-        <div id="cps">0 в секунду</div>
-    </div>
+    <div id="counter">0</div>
+    <img onclick="baklazhanClicked();" src="./assets/baklazhan_avatar.png" alt="Баклажан" style="cursor:pointer;">
+    <div id="cps">0 в секунду</div>
 </main>
-<div id="viewport"></div>
-<div id="viewport-params-size"></div>
-<div id="viewport-params-expand"></div>
+
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
     // Init TWA
@@ -121,3 +111,4 @@
 
 </script>
 </body>
+</html>
