@@ -50,7 +50,8 @@
             cursor: pointer;
             -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
             pointer-events: auto; /* Allow pointer events (because img usually disables some) */
-            transition: all 0.1s ease-in-out; /* Animation for clicking effect */
+            transition: color 0.1s ease-in-out; /* Animation for clicking effect */
+            -webkit-transition: 100ms width linear;
         }
 
         /* Add a button-like effect: scale on click */
