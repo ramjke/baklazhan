@@ -8,6 +8,10 @@
     <style>
         /* Ensure body takes full viewport and uses flexbox for centering */
         html, body {
+            -webkit-user-select: none; /* For Safari */
+            -moz-user-select: none;    /* For Firefox */
+            -ms-user-select: none;     /* For Internet Explorer/Edge */
+            user-select: none;         /* Standard property */
             --bg-color: var(--tg-theme-bg-color);
             background-color: var(--bg-color);
             color-scheme: var(--tg-color-scheme);
